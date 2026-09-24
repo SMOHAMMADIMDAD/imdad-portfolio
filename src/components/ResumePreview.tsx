@@ -1,7 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
 import { motion } from "framer-motion";
 import {
   Download,
@@ -14,11 +14,27 @@ import {
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 
-// PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+/*
+ * IMPORTANT:
+ * react-pdf / pdf.js uses browser-only APIs such as `document`.
+ * Loading it with SSR disabled prevents Next.js from evaluating
+ * pdf.js during the server build.
+ */
+const PDFDocument = dynamic(
+  () => import("react-pdf").then((mod) => mod.Document),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
+const PDFPage = dynamic(
+  () => import("react-pdf").then((mod) => mod.Page),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -44,11 +60,11 @@ export default function ResumePreview({
    * Responsive PDF width.
    *
    * Desktop:
-   *   PDF stays large but contained.
+   * PDF stays large but contained.
    *
    * Mobile:
-   *   PDF intentionally stays wider than the phone screen.
-   *   This makes the resume readable and allows horizontal scrolling.
+   * PDF intentionally stays wider than the phone screen.
+   * This makes the resume readable and allows horizontal scrolling.
    */
   useEffect(() => {
     if (!isOpen) return;
@@ -64,7 +80,9 @@ export default function ResumePreview({
         // Keep the resume wider than the phone viewport.
         setBaseWidth(Math.max(520, availableWidth - 20));
       } else {
-        setBaseWidth(Math.min(820, Math.max(500, availableWidth - 32)));
+        setBaseWidth(
+          Math.min(820, Math.max(500, availableWidth - 32))
+        );
       }
     };
 
@@ -126,6 +144,7 @@ export default function ResumePreview({
       setZoom(1);
       setIsLoading(true);
       setError(false);
+      setNumPages(0);
     }
   }, [isOpen]);
 
@@ -136,11 +155,15 @@ export default function ResumePreview({
   const pdfWidth = Math.round(baseWidth * zoom);
 
   const zoomIn = () => {
-    setZoom((current) => Math.min(1.8, Number((current + 0.15).toFixed(2))));
+    setZoom((current) =>
+      Math.min(1.8, Number((current + 0.15).toFixed(2)))
+    );
   };
 
   const zoomOut = () => {
-    setZoom((current) => Math.max(0.7, Number((current - 0.15).toFixed(2))));
+    setZoom((current) =>
+      Math.max(0.7, Number((current - 0.15).toFixed(2)))
+    );
   };
 
   const resetZoom = () => {
@@ -278,7 +301,6 @@ export default function ResumePreview({
               "
             >
               <RotateCcw size={11} strokeWidth={1.7} />
-
               {Math.round(zoom * 100)}%
             </button>
 
@@ -334,7 +356,7 @@ export default function ResumePreview({
               sm:p-6
             "
           >
-            <Document
+            <PDFDocument
               file="/resume.pdf?v=2"
               onLoadSuccess={({ numPages: loadedPages }) => {
                 setNumPages(loadedPages);
@@ -387,7 +409,7 @@ export default function ResumePreview({
                 )}
 
                 {!error && (
-                  <Page
+                  <PDFPage
                     pageNumber={pageNumber}
                     width={pdfWidth}
                     renderTextLayer={true}
@@ -396,7 +418,7 @@ export default function ResumePreview({
                   />
                 )}
               </div>
-            </Document>
+            </PDFDocument>
           </div>
         </div>
 
@@ -450,9 +472,7 @@ export default function ResumePreview({
               className="transition-transform duration-300 group-hover:translate-y-0.5"
             />
 
-            <span>
-              Download Resume
-            </span>
+            <span>Download Resume</span>
           </a>
         </div>
       </motion.div>
