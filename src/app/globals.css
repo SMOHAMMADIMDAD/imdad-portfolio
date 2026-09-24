@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f2ec;
+  --foreground: #111111;
+  --surface: #ebe9e2;
+  --surface-dark: #111111;
+  --muted: #77766f;
+  --line: rgba(17, 17, 17, 0.12);
+  --accent: #315cff;
+  --accent-soft: #e3e8ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #315cff;
+  color: #ffffff;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f2ec;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b7b6b0;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #77766f;
+}
+
+/* =========================================================
+   GLOBAL MICRO UI
+========================================================= */
+
+.eyebrow {
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.blue-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.section-line {
+  height: 1px;
+  width: 100%;
+  background: var(--line);
+  transform-origin: left;
+}
+
+/* =========================================================
+   PORTFOLIO SECTION RHYTHM
+========================================================= */
+
+/*
+  One consistent vertical rhythm for the whole portfolio.
+
+  This prevents:
+  Hero       -> huge gap
+  About      -> different gap
+  Projects   -> different gap
+  Skills     -> different gap
+  Journey    -> different gap
+  Contact    -> different gap
+*/
+
+#about,
+#work,
+#skills,
+#journey,
+#contact {
+  padding-top: clamp(76px, 7vw, 108px) !important;
+  padding-bottom: clamp(76px, 7vw, 108px) !important;
+}
+
+/* =========================================================
+   HERO HEIGHT
+========================================================= */
+
+/*
+  The Hero previously used min-h-screen twice:
+
+  1. outer Hero section
+  2. inner Hero content wrapper
+
+  That created the oversized empty area before About.
+
+  The navbar occupies part of the viewport, so the Hero
+  should occupy the remaining viewport height.
+*/
+
+#home {
+  min-height: calc(100vh - 72px) !important;
+}
+
+/* Hero's inner min-h-screen wrapper */
+
+#home > .min-h-screen {
+  min-height: calc(100vh - 72px) !important;
+}
+
+/* =========================================================
+   ABOUT INTERNAL RHYTHM
+========================================================= */
+
+/*
+  Keeps the Capabilities block connected to the About
+  content instead of creating another oversized gap.
+*/
+
+#about .mt-24 {
+  margin-top: 64px !important;
+}
+
+@media (min-width: 1024px) {
+  #about .lg\:mt-32 {
+    margin-top: 80px !important;
+  }
+}
+
+/* =========================================================
+   SECTION ANCHOR OFFSET
+========================================================= */
+
+/*
+  Prevents the navbar from covering section headings when
+  clicking Work / About / Skills / Journey.
+*/
+
+#about,
+#work,
+#skills,
+#journey,
+#contact {
+  scroll-margin-top: 72px;
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  #about,
+  #work,
+  #skills,
+  #journey,
+  #contact {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+
+  #home {
+    min-height: calc(100svh - 64px) !important;
+  }
+
+  #home > .min-h-screen {
+    min-height: calc(100svh - 64px) !important;
+  }
+
+  #about {
+    scroll-margin-top: 64px;
+  }
+}
