@@ -11,25 +11,15 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-import "react-pdf/dist/Page/TextLayer.css";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-
 /*
  * IMPORTANT:
- * react-pdf / pdf.js uses browser-only APIs such as `document`.
- * Loading it with SSR disabled prevents Next.js from evaluating
- * pdf.js during the server build.
+ * react-pdf / pdf.js is loaded only in the browser.
+ *
+ * This prevents Next.js from evaluating PDF.js during
+ * the server-side production build.
  */
-const PDFDocument = dynamic(
-  () => import("react-pdf").then((mod) => mod.Document),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const PDFPage = dynamic(
-  () => import("react-pdf").then((mod) => mod.Page),
+const ResumePdfViewer = dynamic(
+  () => import("./ResumePdfViewer"),
   {
     ssr: false,
     loading: () => null,
@@ -356,8 +346,32 @@ export default function ResumePreview({
               sm:p-6
             "
           >
-            <PDFDocument
-              file="/resume.pdf?v=2"
+            {isLoading && !error && (
+              <div
+                className="
+                  flex
+                  min-h-[400px]
+                  min-w-[300px]
+                  items-center
+                  justify-center
+                  rounded-lg
+                  bg-white
+                  shadow-xl
+                "
+              >
+                <div className="text-center">
+                  <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-black/15 border-t-[#315cff]" />
+
+                  <div className="mt-3 text-[9px] uppercase tracking-[0.15em] text-black/40">
+                    Loading resume
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <ResumePdfViewer
+              pageNumber={pageNumber}
+              pdfWidth={pdfWidth}
               onLoadSuccess={({ numPages: loadedPages }) => {
                 setNumPages(loadedPages);
                 setIsLoading(false);
@@ -367,58 +381,8 @@ export default function ResumePreview({
                 setIsLoading(false);
                 setError(true);
               }}
-              loading={null}
-              error={null}
-            >
-              <div className="relative">
-                {isLoading && (
-                  <div
-                    className="
-                      flex
-                      min-h-[400px]
-                      min-w-[300px]
-                      items-center
-                      justify-center
-                      rounded-lg
-                      bg-white
-                      shadow-xl
-                    "
-                  >
-                    <div className="text-center">
-                      <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-black/15 border-t-[#315cff]" />
-
-                      <div className="mt-3 text-[9px] uppercase tracking-[0.15em] text-black/40">
-                        Loading resume
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="flex min-h-[400px] min-w-[300px] items-center justify-center rounded-lg bg-white px-8 text-center shadow-xl">
-                    <div>
-                      <div className="text-[11px] font-medium text-black/70">
-                        Unable to preview the resume
-                      </div>
-
-                      <div className="mt-2 text-[9px] leading-5 text-black/40">
-                        You can still download the PDF below.
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {!error && (
-                  <PDFPage
-                    pageNumber={pageNumber}
-                    width={pdfWidth}
-                    renderTextLayer={true}
-                    renderAnnotationLayer={true}
-                    className="overflow-hidden bg-white shadow-[0_15px_40px_rgba(0,0,0,0.18)]"
-                  />
-                )}
-              </div>
-            </PDFDocument>
+              error={error}
+            />
           </div>
         </div>
 
