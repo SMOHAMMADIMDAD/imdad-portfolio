@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# S. Mohammad Imdad - Portfolio
 
-## Getting Started
+Personal portfolio website of **S. Mohammad Imdad**, an AI & Data Science graduate focused on building intelligent systems, full-stack applications, and software that solves real-world problems.
 
-First, run the development server:
+## Live Portfolio
+
+**Portfolio:** https://imdad-portfolio-pi.vercel.app/
+
+## About
+
+I'm an AI & Data Science graduate with an interest in:
+
+- Artificial Intelligence
+- AI Tools & Agents
+- Full-Stack Development
+- Backend Development
+- Data & Computer Vision
+- REST API Development
+- Software Engineering
+
+This portfolio presents my projects, technical skills, development journey, and ways to get in touch.
+
+## Featured Projects
+
+### AI Stylist - Fashion Recommendation System
+
+A fashion recommendation application built around AI, software development, and data.
+
+**Tech:** Python, Django, React, PostgreSQL, REST APIs, Computer Vision
+
+Key areas:
+
+- Fashion recommendation
+- AI-based application development
+- REST API integration
+- Database-backed application architecture
+- Computer-vision-based functionality
+- Unit testing and debugging
+
+### AI Assistant - Multi-Step Agentic Query & Automation Tool
+
+An AI assistant designed to process natural-language requests through multi-step workflows.
+
+**Tech:** Python, FastAPI, Google Gemini API, REST APIs
+
+Key areas:
+
+- Multi-step agentic workflows
+- Natural-language input processing
+- AI/LLM API integration
+- FastAPI backend development
+- Input validation
+- Error handling and logging
+- Testing and technical documentation
+
+## Tech Stack
+
+### Languages
+
+- Python
+- JavaScript
+- TypeScript
+- SQL
+
+### Software Engineering
+
+- Object-Oriented Programming
+- Data Structures & Algorithms
+- Design Patterns
+- Clean Code
+- Unit Testing
+- Debugging
+- Requirements Analysis
+- Functional & Technical Design
+- SDLC
+
+### Backend & APIs
+
+- FastAPI
+- Django
+- REST API Design
+- REST API Integration
+
+### Databases
+
+- PostgreSQL
+- MySQL
+- MongoDB
+
+### Frontend
+
+- React
+- Next.js
+- HTML
+- CSS
+
+### AI & Data
+
+- Gemini API
+- Multi-Agent Orchestration
+- Prompt Engineering
+- Computer Vision
+- AI Tools & Agents
+
+### Tools
+
+- Git
+- GitHub
+- Jupyter
+- Power BI
+- Tableau
+
+## Running Locally
+
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/SMOHAMMADIMDAD/imdad-portfolio.git
